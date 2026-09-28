@@ -80,48 +80,39 @@ setNotes(updatedNotes);
       />
 
       {showForm && (
+  <View style={styles.form}>
+    <TextInput
+      style={styles.input}
+      placeholder="Note title"
+      value={title}
+      onChangeText={setTitle}
+    />
 
-        <View style={styles.form}>
-          <TextInput
-          style={styles.input}
-          placeholder="Note title"
-        />
+    <TextInput
+      style={styles.input}
+      placeholder="Note content"
+      value={content}
+      onChangeText={setContent}
+      multiline
+    />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Note content"
-          multiline
-        />
+    <TextInput
+      style={styles.input}
+      placeholder="Category"
+      value={category}
+      onChangeText={setCategory}
+    />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Category"
-        />
+    <TouchableOpacity style={styles.saveButton}>
+      <Text style={styles.saveButtonText}>Save Note</Text>
+    </TouchableOpacity>
 
-        <TouchableOpacity style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Save Note</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setShowForm(false)}>
-          <Text>Cancel</Text>
-        </TouchableOpacity>
-
-        </View>
-      )}
-
-       <TouchableOpacity
-      style={styles.addButton}
-      onPress={() => setShowForm(true)}>
-        <Text style={styles.addButtonText}>+</Text>
-      </TouchableOpacity>
-
-
-
-
-      <Text>Total Notes: {notes.length}</Text>
-    </View>
-  );
-}
+    <TouchableOpacity onPress={() => setShowForm(false)}>
+      <Text>Cancel</Text>
+    </TouchableOpacity>
+  </View>
+  
+)}
 
 
 const styles = StyleSheet.create({
