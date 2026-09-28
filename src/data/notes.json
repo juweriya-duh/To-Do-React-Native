@@ -1,0 +1,48 @@
+[
+
+{
+ "id": "1",
+    "title": "React Native",
+    "content": "Learn navigation, FlatList and forms.",
+    "category": "Learning",
+    "pinned": true,
+    "createdAt": "2026-09-28"
+},
+{
+    "id": "2",
+    "title": "Weekend Plans",
+    "content": "Go for a drive and visit a new cafe.",
+    "category": "Personal",
+    "pinned": false,
+    "createdAt": "2026-09-27"
+
+},
+{
+    "id": "4",
+    "title": "Weekend Plans",
+    "content": "Go for a drive and visit a new cafe.",
+    "category": "Personal",
+    "pinned": false,
+    "createdAt": "2026-09-27"
+
+},
+{
+    "id": "5",
+    "title": "Weekend Plans",
+    "content": "Go for a drive and visit a new cafe.",
+    "category": "Personal",
+    "pinned": false,
+    "createdAt": "2026-09-27"
+
+},
+{
+ "id": "3",
+    "title": "System Design",
+    "content": "Revise caching, queues and distributed locks.",
+    "category": "Learning",
+    "pinned": false,
+    "createdAt": "2026-09-26"
+}
+
+
+]
