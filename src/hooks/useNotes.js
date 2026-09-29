@@ -10,8 +10,21 @@ export function NotesProvider({children}){
  setNotes((currentNotes) => [...currentNotes, note]);
     };
 
+    const togglePin = (id) => {  setNotes((currentNotes) =>
+        currentNotes.map((note) => {
+              if (note.id === id) {
+        return {
+          ...note,
+          pinned: !note.pinned,
+        };
+      }
+        return note;
+    })
+  );
+};
+
     return (
-        <NotesContext.Provider value = {{notes, addNote}}>
+        <NotesContext.Provider value = {{notes, addNote, togglePin}}>
             {children}
         </NotesContext.Provider>
     );
