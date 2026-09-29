@@ -1,9 +1,12 @@
 import {View, Text, FlatList , StyleSheet, TouchableOpacity, TextInput } from "react-native";
 
-import { useState } from "react"
 
-import notesData from "../data/notes.json"
-import NoteCard from "../components/NoteCard"
+import { useState } from "react"
+import {router} from "expo-router"
+
+
+import notesData from "../../data/notes.json"
+import NoteCard from "../../components/NoteCard"
 
 export default function Index(){
 
@@ -48,19 +51,18 @@ setNotes(updatedNotes);
 />
 
 
-      <View style = {styles.filerContainer}>
+      <View style = {styles.filterContainer}>
 
         <TouchableOpacity
             onPress={() => setFilter("all")}
             style={styles.filterButton}>
-
               <Text>All</Text>
             </TouchableOpacity>
+
 
             <TouchableOpacity
             onPress={() => setFilter("pinned")}
             style={styles.filterButton}>
-
               <Text>Pinned</Text>
               </TouchableOpacity>
       </View>
@@ -107,16 +109,17 @@ setNotes(updatedNotes);
       </View>
     )}
 
-    {/* Floating + Button */}
+    
     <TouchableOpacity
       style={styles.addButton}
-      onPress={() => setShowForm(true)}
+      onPress={() => router.push("/notee/create")}
     >
       <Text style={styles.addButtonText}>+</Text>
     </TouchableOpacity>
 
   </View>
 );
+}
 
 
 const styles = StyleSheet.create({
@@ -203,5 +206,4 @@ saveButtonText: {
   textAlign: "center",
   fontWeight: "bold",
 },
-})
-};
+});
