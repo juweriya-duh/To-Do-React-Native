@@ -1,10 +1,15 @@
 import { View, Text,TouchableOpacity ,StyleSheet } from "react-native";
+import { router } from "expo-router";
+
 
 export default function NoteCard({ note, onTogglePin }){
     return (
 
 
-            <View style={styles.noteCard}>
+           <TouchableOpacity
+            style={styles.noteCard}
+            onPress={() => router.push(`/notee/${note.id}`)}
+           >
 
 
 
@@ -23,8 +28,7 @@ export default function NoteCard({ note, onTogglePin }){
             <Text style={styles.category}>{note.category}</Text>
             <Text style={styles.createdAT}>{note.createdAt}</Text>
 
-          </View>
-
+          </TouchableOpacity>
     );
 }
 
