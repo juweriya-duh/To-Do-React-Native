@@ -2,12 +2,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet} from "react-native
 
 import { useState } from "react";
 import { router } from "expo-router";
+import useNotes from "../../hooks/useNotes";
 
 export default function CreateNote() {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("");
+        const { addNote } = useNotes();
 
     return (
 
@@ -22,9 +24,16 @@ export default function CreateNote() {
 
                 <TouchableOpacity style={styles.saveButton}
                 onPress={() => {
-                    console.log(title);
-                    console.log(content);
-                    console.log(category);
+                    const newNote = {
+                        id: Date.now().toString(),
+                        title: title,
+                        content: content,
+                        category: category,
+                        pinned: false,
+                    };
+                    addNote(newNote);
+                     router.back();
+                  
                 }}
                 >
                     <Text style = {styles.saveText}>Save</Text>
