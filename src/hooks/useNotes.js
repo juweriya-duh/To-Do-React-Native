@@ -23,11 +23,44 @@ export function NotesProvider({children}){
   );
 };
 
+   const deleteNote = (id) => {
+    setNotes((currentNotes) => currentNotes.filter((note) => note.id !== id))
+   }
+
+const updateNote = (updatedNote) => {
+  setNotes((currentNotes) =>
+    currentNotes.map((note) => {
+      if (note.id === updatedNote.id) {
+        return updatedNote;
+      }
+
+      return note;
+    })
+  );
+};
+
+   
+    
+
+
     return (
-        <NotesContext.Provider value = {{notes, addNote, togglePin}}>
+        <NotesContext.Provider value = {{notes, addNote, togglePin , deleteNote, updateNote}}>
             {children}
         </NotesContext.Provider>
     );
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 export default function useNotes(){

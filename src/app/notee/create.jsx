@@ -1,15 +1,31 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from "react-native";
 
-import { useState } from "react";
-import { router } from "expo-router";
+import { useState, useEffect } from "react";
+import { router, useLocalSearchParams } from "expo-router";
 import useNotes from "../../hooks/useNotes";
 
 export default function CreateNote() {
 
+    const { id } = useLocalSearchParams();
+
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("");
-        const { addNote } = useNotes();
+    const [pinned, setPinned] = useState(false);
+        const { notes, addNote, updateNote } = useNotes();
+
+        const note = notes.find((item) => item.id === id);
+    
+
+useEffect(() => {
+  if (note) {
+    setTitle(note.title);
+    setContent(note.content);
+    setCategory(note.category);
+    setPinned(note.pinned);
+  }
+}, [note]);
+
 
     return (
 
@@ -20,10 +36,23 @@ export default function CreateNote() {
                     <Text style={styles.back}>‹</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.heading}>New Note</Text>
+                <Text style={styles.heading}>
+                {id ? "Edit Note" : "New Note"}
+                </Text>
 
                 <TouchableOpacity style={styles.saveButton}
                 onPress={() => {
+                 if (id) {
+                    const updatedNote = {
+                        ...note,
+                        title: title,
+                        content: content,
+                        category: category,
+                        pinned: pinned,
+                    };
+
+                    updateNote(updatedNote);
+                    } else {
                     const newNote = {
                         id: Date.now().toString(),
                         title: title,
@@ -31,8 +60,11 @@ export default function CreateNote() {
                         category: category,
                         pinned: false,
                     };
+
                     addNote(newNote);
-                     router.back();
+                    }
+
+                    router.back();
                   
                 }}
                 >
@@ -64,6 +96,16 @@ export default function CreateNote() {
                  value={category}
                  onChangeText={setCategory}
                  />
+
+                    <TouchableOpacity
+            style={styles.pinButton}
+            onPress={() => setPinned(!pinned)}
+            >
+            <Text style={styles.pinText}>
+                {pinned ? "📌 Pinned" : "📍 Not Pinned"}
+            </Text>
+            </TouchableOpacity>
+
         </View>
     );
 }
@@ -127,4 +169,17 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     fontSize: 16,
   },
+
+  pinButton: {
+  padding: 12,
+  borderRadius: 10,
+  marginTop: 10,
+  backgroundColor: "#eee",
+  alignItems: "center",
+},
+
+pinText: {
+  fontSize: 16,
+  fontWeight: "bold",
+},
 });

@@ -4,29 +4,28 @@ import {View, Text, FlatList , StyleSheet, TouchableOpacity, TextInput } from "r
 import { useState } from "react"
 import {router} from "expo-router"
 
-
-import notesData from "../../data/notes.json"
+import useNotes from "../../hooks/useNotes";
 import NoteCard from "../../components/NoteCard"
 
 export default function Index(){
 
  const [searchText, setSearchText] = useState("");
- const [notes, setNotes] = useState(notesData);
+//  const [notes, setNotes] = useState(notesData);
+const { notes , togglePin} = useNotes();
  const [filter, setFilter] = useState("all")
-const [showForm, setShowForm] = useState(false);
 
 
-const togglePin = (id) => {
-   const updatedNotes = notes.map((note) => {
-    if(note.id === id){
-      return {
-        ...note, pinned: !note.pinned,
-      };
-    }
-    return note;
-  })
-setNotes(updatedNotes);
-};
+// const togglePin = (id) => {
+//    const updatedNotes = notes.map((note) => {
+//     if(note.id === id){
+//       return {
+//         ...note, pinned: !note.pinned,
+//       };
+//     }
+//     return note;
+//   })
+// setNotes(updatedNotes);
+// };
 
 
   const filteredNotes =
@@ -55,14 +54,16 @@ setNotes(updatedNotes);
 
         <TouchableOpacity
             onPress={() => setFilter("all")}
-            style={styles.filterButton}>
+            style={[styles.filterButton, filter === "all" && styles.activeFilter]}>
+
+
               <Text>All</Text>
             </TouchableOpacity>
 
 
             <TouchableOpacity
             onPress={() => setFilter("pinned")}
-            style={styles.filterButton}>
+            style={[styles.filterButton, filter === "pinned" && styles.activeFilter]}>
               <Text>Pinned</Text>
               </TouchableOpacity>
       </View>
@@ -81,7 +82,7 @@ setNotes(updatedNotes);
              )}
       />
 
-      {showForm && (
+      {/* {showForm && (
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -107,7 +108,7 @@ setNotes(updatedNotes);
           <Text>Cancel</Text>
         </TouchableOpacity>
       </View>
-    )}
+    )} */}
 
     
     <TouchableOpacity
@@ -143,10 +144,11 @@ filterContainer: {
   },
 
   filterButton: {
-    padding: 10,
-    marginRight: 10,
-    backgroundColor: "#ddd",
-    borderRadius: 8,
+     paddingHorizontal: 16,
+  paddingVertical: 8,
+  borderRadius: 20,
+  backgroundColor: "#cdbbcc",
+  marginRight: 8,
   },
 
   searchInput: 
@@ -157,6 +159,10 @@ filterContainer: {
   padding: 12,
   borderRadius: 8,
   marginBottom: 15,
+},
+
+activeFilter: {
+  backgroundColor: "#287BEA",
 },
 
 addButton: {
@@ -182,28 +188,28 @@ addButtonText: {
   fontWeight: "bold",
 },
 
-form: {
-  marginBottom: 20,
-},
+// form: {
+//   marginBottom: 20,
+// },
 
-input: {
-  borderWidth: 1,
-  borderColor: "#ccc",
-  padding: 12,
-  borderRadius: 8,
-  marginBottom: 10,
-},
+// input: {
+//   borderWidth: 1,
+//   borderColor: "#ccc",
+//   padding: 12,
+//   borderRadius: 8,
+//   marginBottom: 10,
+// },
 
-saveButton: {
-  padding: 12,
-  backgroundColor: "green",
-  borderRadius: 8,
-  marginBottom: 10,
-},
+// saveButton: {
+//   padding: 12,
+//   backgroundColor: "green",
+//   borderRadius: 8,
+//   marginBottom: 10,
+// },
 
-saveButtonText: {
-  color: "#fff",
-  textAlign: "center",
-  fontWeight: "bold",
-},
+// saveButtonText: {
+//   color: "#fff",
+//   textAlign: "center",
+//   fontWeight: "bold",
+// },
 });
