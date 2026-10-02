@@ -1,63 +1,50 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+
 import useNotes from "../../hooks/useNotes";
 import { useState } from "react";
 
-
 export default function Filter() {
+  const { notes } = useNotes();
 
-    const { notes } = useNotes();
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const categories = [];
+  const categories = [];
 
-// notes.forEach((note) => {
-//   if (!categories.includes(note.category)) {
-//     categories.push(note.category);
-//   }
-// });
-
-{categories.map((category) => (
-  <TouchableOpacity
-    key={category}
-    onPress={() => setSelectedCategory(category)}
-  >
-    <Text>{category}</Text>
-  </TouchableOpacity>
-))}
-
-
+  notes.forEach((note) => {
+    if (!categories.includes(note.category)) {
+      categories.push(note.category);
+    }
+  });
 
   return (
-    //  <View style={styles.container}>
-    //   <Text style={styles.heading}>Filters</Text>
-
-    // {categories.map((category) => (
-    //     <Text key={category}>
-    //       {category}
-    //     </Text>
-    //   ))}
-
-    // </View>
-
     <View style={styles.container}>
-    <Text style={styles.heading}>Filters</Text>
 
-    {categories.map((category) => (
-      <TouchableOpacity
-        key={category}
-        onPress={() => setSelectedCategory(category)}
-      >
-        <Text>{category}</Text>
-      </TouchableOpacity>
-    ))}
+      <Text style={styles.heading}>Filters</Text>
 
-    {selectedCategory && (
-      <Text style={styles.selectedText}>
-        Selected: {selectedCategory}
-      </Text>
-    )}
-  </View>
+      {categories.map((category) => (
+        <TouchableOpacity
+          key={category}
+          onPress={() => setSelectedCategory(category)}
+          style={styles.categoryButton}
+        >
+          <Text style={styles.categoryText}>
+            {category}
+          </Text>
+        </TouchableOpacity>
+      ))}
 
+      {selectedCategory && (
+        <Text style={styles.selectedText}>
+          Selected: {selectedCategory}
+        </Text>
+      )}
+
+    </View>
   );
 }
 
@@ -72,10 +59,24 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     fontSize: 32,
     fontWeight: "bold",
+    marginBottom: 20,
   },
+
+  categoryButton: {
+    padding: 15,
+    backgroundColor: "#cdbbcc",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+
+  categoryText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
   selectedText: {
-  marginTop: 20,
-  fontSize: 18,
-  fontWeight: "bold",
-},
+    marginTop: 20,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
