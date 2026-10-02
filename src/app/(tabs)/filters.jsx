@@ -7,9 +7,11 @@ import {
 
 import useNotes from "../../hooks/useNotes";
 import { useState } from "react";
+import NoteCard from "../../components/NoteCard";
 
 export default function Filter() {
-  const { notes } = useNotes();
+  // const { notes } = useNotes();
+  const { notes, togglePin } = useNotes();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -20,6 +22,10 @@ export default function Filter() {
       categories.push(note.category);
     }
   });
+
+  const filteredNotes = selectedCategory
+  ? notes.filter((note) => note.category === selectedCategory)
+  : notes;
 
   return (
     <View style={styles.container}>
@@ -43,6 +49,15 @@ export default function Filter() {
           Selected: {selectedCategory}
         </Text>
       )}
+
+
+{filteredNotes.map((note) => (
+  <NoteCard
+    key={note.id}
+    note={note}
+    onTogglePin={togglePin}
+  />
+      ))}
 
     </View>
   );
