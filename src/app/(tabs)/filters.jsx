@@ -31,7 +31,7 @@ export default function Filter() {
     <View style={styles.container}>
       <Text style={styles.heading}>Filters</Text>
 
-    <TouchableOpacity
+<TouchableOpacity
   style={[
     styles.categoryButton,
     selectedCategory === null && styles.activeCategory,
@@ -57,6 +57,7 @@ export default function Filter() {
     </Text>
   </TouchableOpacity>
 ))}
+    
       {selectedCategory && (
         <Text style={styles.selectedText}>
           Selected: {selectedCategory}
@@ -109,4 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  activeCategory: {
+  backgroundColor: "#287BEA",
+},
 });
