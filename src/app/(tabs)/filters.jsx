@@ -3,14 +3,14 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 
-import useNotes from "../../hooks/useNotes";
 import { useState } from "react";
+import useNotes from "../../hooks/useNotes";
 import NoteCard from "../../components/NoteCard";
 
 export default function Filter() {
-  // const { notes } = useNotes();
   const { notes, togglePin } = useNotes();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -24,19 +24,18 @@ export default function Filter() {
   });
 
   const filteredNotes = selectedCategory
-  ? notes.filter((note) => note.category === selectedCategory)
-  : notes;
+    ? notes.filter((note) => note.category === selectedCategory)
+    : notes;
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.heading}>Filters</Text>
 
       {categories.map((category) => (
         <TouchableOpacity
           key={category}
-          onPress={() => setSelectedCategory(category)}
           style={styles.categoryButton}
+          onPress={() => setSelectedCategory(category)}
         >
           <Text style={styles.categoryText}>
             {category}
@@ -50,15 +49,16 @@ export default function Filter() {
         </Text>
       )}
 
-
-{filteredNotes.map((note) => (
-  <NoteCard
-    key={note.id}
-    note={note}
-    onTogglePin={togglePin}
-  />
-      ))}
-
+      <FlatList
+        data={filteredNotes}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <NoteCard
+            note={item}
+            onTogglePin={togglePin}
+          />
+        )}
+      />
     </View>
   );
 }
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
   },
 
   selectedText: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 10,
     fontSize: 18,
     fontWeight: "bold",
   },
