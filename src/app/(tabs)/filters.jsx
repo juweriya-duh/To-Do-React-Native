@@ -31,18 +31,32 @@ export default function Filter() {
     <View style={styles.container}>
       <Text style={styles.heading}>Filters</Text>
 
-      {categories.map((category) => (
-        <TouchableOpacity
-          key={category}
-          style={styles.categoryButton}
-          onPress={() => setSelectedCategory(category)}
-        >
-          <Text style={styles.categoryText}>
-            {category}
-          </Text>
-        </TouchableOpacity>
-      ))}
+    <TouchableOpacity
+  style={[
+    styles.categoryButton,
+    selectedCategory === null && styles.activeCategory,
+  ]}
+  onPress={() => setSelectedCategory(null)}
+>
+  <Text style={styles.categoryText}>
+    All Categories
+  </Text>
+</TouchableOpacity>
 
+{categories.map((category) => (
+  <TouchableOpacity
+    key={category}
+    style={[
+      styles.categoryButton,
+      selectedCategory === category && styles.activeCategory,
+    ]}
+    onPress={() => setSelectedCategory(category)}
+  >
+    <Text style={styles.categoryText}>
+      {category}
+    </Text>
+  </TouchableOpacity>
+))}
       {selectedCategory && (
         <Text style={styles.selectedText}>
           Selected: {selectedCategory}
