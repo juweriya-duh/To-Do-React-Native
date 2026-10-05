@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 
 import { useState } from "react";
@@ -31,33 +32,35 @@ export default function Filter() {
     <View style={styles.container}>
       <Text style={styles.heading}>Filters</Text>
 
-<TouchableOpacity
-  style={[
-    styles.categoryButton,
-    selectedCategory === null && styles.activeCategory,
-  ]}
-  onPress={() => setSelectedCategory(null)}
->
-  <Text style={styles.categoryText}>
-    All Categories
-  </Text>
-</TouchableOpacity>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.categoryScroll}
+      >
+        <TouchableOpacity
+          style={[
+            styles.categoryButton,
+            selectedCategory === null && styles.activeCategory,
+          ]}
+          onPress={() => setSelectedCategory(null)}
+        >
+          <Text style={styles.categoryText}>All</Text>
+        </TouchableOpacity>
 
-{categories.map((category) => (
-  <TouchableOpacity
-    key={category}
-    style={[
-      styles.categoryButton,
-      selectedCategory === category && styles.activeCategory,
-    ]}
-    onPress={() => setSelectedCategory(category)}
-  >
-    <Text style={styles.categoryText}>
-      {category}
-    </Text>
-  </TouchableOpacity>
-))}
-    
+        {categories.map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.categoryButton,
+              selectedCategory === category && styles.activeCategory,
+            ]}
+            onPress={() => setSelectedCategory(category)}
+          >
+            <Text style={styles.categoryText}>{category}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
       {selectedCategory && (
         <Text style={styles.selectedText}>
           Selected: {selectedCategory}
@@ -73,6 +76,7 @@ export default function Filter() {
             onTogglePin={togglePin}
           />
         )}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -92,25 +96,30 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
+  categoryScroll: {
+    marginBottom: 15,
+  },
+
   categoryButton: {
-    padding: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     backgroundColor: "#cdbbcc",
-    borderRadius: 10,
-    marginBottom: 10,
+    borderRadius: 20,
+    marginRight: 8,
   },
 
   categoryText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
 
+  activeCategory: {
+    backgroundColor: "#287BEA",
+  },
+
   selectedText: {
-    marginTop: 10,
     marginBottom: 10,
     fontSize: 18,
     fontWeight: "bold",
   },
-  activeCategory: {
-  backgroundColor: "#287BEA",
-},
 });
